@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:id="@+id/parentll"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/features_settings"/>
+
+
+        <Switch
+            android:id="@+id/posbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/pos_button_disp"
+            android:checked="true"
+            android:text="@string/pos_button_text" />
+
+
+        <Switch
+            android:id="@+id/negbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/neg_button_disp"
+            android:checked="true"
+            android:text="@string/neg_button_text" />
+
+
+        <Switch
+            android:id="@+id/neutralbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/neutral_button_disp"
+            android:checked="true"
+            android:text="@string/neutral_button_text" />
+
+
+        <Switch
+            android:id="@+id/cancellable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/cancellable_setting" />
+
+        <Switch
+            android:id="@+id/cancel_touch_outside"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/cancel_touch_outside_dialog_setting" />
+
+
+        <Button
+            android:id="@+id/generate_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/generate_button"
+            />
+
+        <TextView
+            android:id="@+id/event_position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/observable_events"/>
+
+    </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
+

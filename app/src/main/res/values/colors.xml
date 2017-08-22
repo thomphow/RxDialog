@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="clr_primary">#3f51b5</color>
+  <color name="clr_primaryDark">#2137aa</color>
+  <color name="clr_accent">#3f51b5</color>
+</resources>

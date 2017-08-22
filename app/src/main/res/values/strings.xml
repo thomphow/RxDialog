@@ -1,0 +1,23 @@
+<resources>
+
+  <string name="app_name">Test RxDialog</string>
+  <string name="features_settings">Configure Desired Dialog</string>
+
+  <string name="pos_button_text">Positive Button</string>
+  <string name="pos_button_disp">Submit</string>
+
+  <string name="neg_button_text">Negative Button</string>
+  <string name="neg_button_disp">Cancel</string>
+
+  <string name="neutral_button_text">Neutral Button</string>
+  <string name="neutral_button_disp">Later</string>
+
+  <string name="cancellable_setting">Cancellable</string>
+
+  <string name="cancel_touch_outside_dialog_setting">Cancel on touch outside dialog</string>
+
+  <string name="generate_button">Generate Dialog</string>
+
+  <string name="observable_events">Observable Events</string>
+
+</resources>
