@@ -17,10 +17,10 @@ If I were to make a library I'd make it tightly focused on some very common use 
 
 I did look at a number of open source libraries but this RxDialog library is not a "derivative work" of the collective or any individual.
 
-I was most tempted to use Xavier Leprêtre's rx-alert-dialog work (https://github.com/xavierlepretre/rx-alert-dialogbut) but my needs for a Custom View (yes, what Dan Lew said maybe shouldn't be such a thing) and thinking I could write something much simpler, lead me to what I have created. 
+I was most tempted to use Xavier Leprêtre's rx-alert-dialog work (https://github.com/xavierlepretre/rx-alert-dialogbut) but my needs for a Custom View (yes, what Dan Lew said maybe shouldn't be in such a thing) and thinking I could write something much simpler, lead me to what I have created. 
 
-Kaushik Gopol, one of the two Fragments Podcast hosts, commented verbally that he too created his own Rx Dialog when he first started learning RX .... and reading between his words, that he considered it a mistake to have done.( https://kaush.co/ http://fragmentedpodcast.com/ )
-While I don't consider what I have done a mistake, I do view it as possable a right of passage as people learn to use RX.
+Kaushik Gopol, one of the two Fragmented Podcast hosts, commented verbally that he too created his own Rx Dialog when he first started learning RX .... and reading between his words, that he considered it a mistake to have done.( https://kaush.co/ http://fragmentedpodcast.com/ )
+While I don't consider what I have done a mistake, I have come to view it as possably a right of passage as people learn to use RX.
 
 Howard
 
