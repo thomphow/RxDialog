@@ -186,7 +186,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 import io.reactivex.Observable;
 
 /**
- * This is a builder like class that allows the customer to build a Custom View
+ * This is a builder class used to build a Custom View
  * to be added to the Dialog.
  */
 
@@ -203,8 +203,13 @@ public class CustomPanel {
     private int paddingBottom = 0;
     private int paddingRight = 0;
 
+    /**
+     * Constructor for Panel.
+     * Note: Need to fix exception
+     * @param con Context for creation of the panels views.
+     */
 
-    public CustomPanel(Context con) throws Exception {
+    public CustomPanel(Context con) {
         vScroll = new ScrollView(con);
         lastView = null;
         vLayout = new RelativeLayout(con);
@@ -212,16 +217,36 @@ public class CustomPanel {
         panelContext = con;
     }
 
+    /**
+     *
+     * @return Returns the outer most ScrollView of the panel.
+     */
+
     public final View getView() {
         return vScroll;
     }
 
-
+    /**
+     * Sets Padding values for outter most Scroll View for the panel.
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     * @return Returns the builder panel
+     */
     public CustomPanel setPanelPadding(int left, int top, int right, int bottom) {
         vScroll.setPadding(left, top,right,bottom);
         return this;
     }
 
+    /**
+     * Sets the padding for the next view(s) being added to the panel
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     * @return the builder panel
+     */
     public CustomPanel setViewPadding(int left, int top, int right, int bottom) {
         paddingLeft = left;
         paddingTop = top;
@@ -230,19 +255,29 @@ public class CustomPanel {
         return this;
     }
 
-
+    /**
+     * Aligns the passed view to be left of the previously added view
+     * @param view the view to be aligned
+     */
     private void adjustView(View view) {
         if (lastView != null) {
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
-            Log.d(Constants.TAG,"New View id [" + view.getId() + "] LastView id [" + lastView.getId() + "]");
+            if (Constants.debug)
+                Log.d(Constants.TAG,"New View id [" + view.getId() + "] LastView id [" + lastView.getId() + "]");
             lp.addRule(RelativeLayout.BELOW, lastView.getId());
             lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             view.setLayoutParams(lp);
         }
         lastView = view;
     }
+
+    /**
+     * Sets a drawable as the content of the panel
+     * @param resId drawable icon resource
+     * @return the builder panel
+     */
 
     public CustomPanel addIcon(@DrawableRes int resId) {
         ImageView iv = new ImageView(panelContext);
@@ -258,6 +293,11 @@ public class CustomPanel {
         return this;
     }
 
+    /**
+     * Adds the passed view to the panel
+     * @param msgView view to be added
+     * @return the builder panel
+     */
     public CustomPanel addMessageView(View msgView) {
         msgView.setId(View.generateViewId());
         adjustView(msgView);
@@ -266,7 +306,15 @@ public class CustomPanel {
         return this;
     }
 
-    public Observable<CharSequence> addEditText(String label, int inputType, int length) throws Exception {
+
+    /**
+     * Adds an EditText to the panel
+     * @param label text label
+     * @param inputType see TextView class
+     * @param length length of field
+     * @return the builder panel
+     */
+    public Observable<CharSequence> addEditText(String label, int inputType, int length) {
         TextView tv;
         EditText et;
         tv = new TextView(panelContext);
@@ -293,6 +341,13 @@ public class CustomPanel {
         return RxTextView.textChanges(et);
     }
 
+    /**
+     * Adds an TextView to the panel
+     * @param txtParm text for the field
+     * @param id identifier
+     * @param color text color
+     * @return the builder panel
+     */
     private CustomPanel addText(String txtParm, int id, int color) {
 
         TextView tv;
@@ -307,13 +362,26 @@ public class CustomPanel {
         return this;
     }
 
+    /**
+     * Adds an TextView to the panel with generated view id.
+     * @param txtParm
+     * @param color
+     * @return the builder panel
+     */
     public CustomPanel addText(String txtParm,  int color) {
 
         return addText(txtParm, View.generateViewId(), color);
     }
 
+    /**
+     * Adds an TextView to the panel with generated view id and default
+     * text color of black
+     * @param txtParm text for the field
+     * @return the builder panel
+     */
     public CustomPanel addText(String txtParm) {
         return addText(txtParm, Color.BLACK);
     }
+
 
 }

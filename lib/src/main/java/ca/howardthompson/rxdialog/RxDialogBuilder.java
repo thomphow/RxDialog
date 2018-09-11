@@ -180,7 +180,7 @@ import java.util.Stack;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-/*
+/**
 * This class is an extension of AlertDialog.Builder where methods are called
 * to build a dialog. Instead of create being called to create to dialog,
 * createObservable is called and returned.
@@ -191,17 +191,21 @@ import io.reactivex.functions.Consumer;
 public class RxDialogBuilder extends AlertDialog.Builder
 {
 
-    /*
-    * Stack of dialogs to ensure they are dismissed.
-     */
     private static Stack<AlertDialog> dialogStack = new Stack<>();
 
+    /**
+     * Stack of dialogs to ensure they are dismissed.
+     */
     public static void clearDialogStack() {
         if (dialogStack != null)
             dialogStack.clear();
     }
 
-
+    /**
+     * Builder setup.
+     * @param context
+     * @param completeOnDismiss -  complete is to be sent on dialog dismiss.
+     */
     public RxDialogBuilder(Context context, Boolean completeOnDismiss) {
         super(context);
         setSendComplete(completeOnDismiss);
@@ -220,7 +224,12 @@ public class RxDialogBuilder extends AlertDialog.Builder
 
     private Boolean sendComplete = false;
 
-
+    /**
+     * Modify the attributes of dialog positive button
+     * @param positiveButton - button text
+     * @param enabled - button active or greyed out.
+     * @return dialog builder
+     */
     @NonNull
     public RxDialogBuilder positiveButton(@Nullable String positiveButton, boolean enabled)
     {
@@ -238,6 +247,12 @@ public class RxDialogBuilder extends AlertDialog.Builder
 
     private String negativeButton = "";
 
+    /**
+     * Modify the attributes of dialog negative button
+     * @param negativeButton  - button text
+     * @param enabled - button active or greyed out.
+     * @return dialog builder
+     */
     @NonNull
     public RxDialogBuilder negativeButton(@Nullable String negativeButton, boolean enabled)
     {
@@ -255,6 +270,12 @@ public class RxDialogBuilder extends AlertDialog.Builder
 
     private String neutralButton = "";
 
+    /**
+     * Modify the attributes of dialog neutral button
+     * @param neutralButton - button text
+     * @param enabled - button active or greyed out.
+     * @return dialog builder
+     */
     @NonNull
     public RxDialogBuilder neutralButton(@Nullable String neutralButton, boolean enabled)
     {
@@ -268,8 +289,6 @@ public class RxDialogBuilder extends AlertDialog.Builder
     {
         return neutralButton;
     }
-
-
 
     private boolean positiveEnabled;
 
@@ -290,43 +309,48 @@ public class RxDialogBuilder extends AlertDialog.Builder
     }
 
     //Possibly of value in the future.
-    public int getPaddingA() {
-        return paddingA;
-    }
 
-    public int getPaddingB() {
-        return paddingB;
-    }
-
-    public int getPaddingC() {
-        return paddingC;
-    }
-
-    public int getPaddingD() {
-        return paddingD;
-    }
-
-    private int paddingA;
-    private int paddingB;
-    private int paddingC;
-    private int paddingD;
-    private boolean paddingSet = false;
-
-    protected void setPadding(int a, int b, int c, int d) {
-        paddingA = a;
-        paddingB = b;
-        paddingC = c;
-        paddingD = d;
-        paddingSet = true;
-    }
+//    public int getPaddingA() {
+//        return paddingA;
+//    }
+//
+//    public int getPaddingB() {
+//        return paddingB;
+//    }
+//
+//    public int getPaddingC() {
+//        return paddingC;
+//    }
+//
+//    public int getPaddingD() {
+//        return paddingD;
+//    }
+//
+//    private int paddingA;
+//    private int paddingB;
+//    private int paddingC;
+//    private int paddingD;
+//    private boolean paddingSet = false;
+//
+//    protected void setPadding(int a, int b, int c, int d) {
+//        paddingA = a;
+//        paddingB = b;
+//        paddingC = c;
+//        paddingD = d;
+//        paddingSet = true;
+//    }
 
 
     Boolean getCanceledOnTouchOutside() {
         return CanceledOnTouchOutside;
     }
 
-    // The customer can disable the default of cancellation if the user
-    // touches outside the dialog.
+    /**
+     * The customer can disable the default of cancellation if the user
+     * touches outside the dialog.
+     * @param canceledOnTouchOutside cancel event issued if user touches outside dialog
+     * @return dialog builder
+     */
     public RxDialogBuilder setCanceledOnTouchOutside(Boolean canceledOnTouchOutside) {
         CanceledOnTouchOutside = canceledOnTouchOutside;
         return this;
@@ -349,7 +373,12 @@ public class RxDialogBuilder extends AlertDialog.Builder
                 tmpB.setEnabled(isNeutralEnabled());
     }
 
-
+    /**
+     * Update the text of a button at run time.
+     * @param dialog passed Alert Dialog
+     * @param which The identifier of the button that should be updated.
+     * @param text The new text for the button
+     */
     public static void updateButtonText(AlertDialog dialog, int which, String text) {
         // neutralEnabled = enabled;
         if (dialog != null) {
@@ -358,22 +387,34 @@ public class RxDialogBuilder extends AlertDialog.Builder
                 tmpB.setText(text);
             }
         } else
+        if (Constants.debug)
             Log.d(Constants.TAG,"Dialog is null when trying to update button text");
     }
 
-
+    /**
+     * Update the state of a button at run time.
+     * @param dialog The Alert Dialog to be modified
+     * @param which The identifier of the button that should be updated.
+     * @param enabled Activate or de-activate the button
+     */
     public static void updateButton(AlertDialog dialog, int which, boolean enabled) {
-        // neutralEnabled = enabled;
         if (dialog != null) {
             Button tmpB = dialog.getButton(which);
             if (tmpB != null)
                 tmpB.setEnabled(enabled);
         } else
+        if (Constants.debug)
             Log.d(Constants.TAG,"Dialog is null when trying to update button");
     }
 
 
-    // Was create, change due to conflict with AlertDialog.Builder.create
+    // Was create, name changed due to conflict with AlertDialog.Builder.create
+
+    /**
+     * Creates a DialogEvent Observable based on the configured dialog builder.
+     * @return DialogEvent Observable
+     */
+
     @NonNull
     public Observable<DialogEvent> createObservable()
     {
@@ -385,15 +426,18 @@ public class RxDialogBuilder extends AlertDialog.Builder
                         if (!dialogStack.empty()) {
                             AlertDialog tmpD = dialogStack.pop();
                             tmpD.dismiss();
+                            if (Constants.debug)
                             Log.d(Constants.TAG, "Pop called on dialog stack");
 
                         } else
+                        if (Constants.debug)
                             Log.d(Constants.TAG, "Pop called on EMPTY dialog stack");
                     }
 
                 })
                 .doOnError(new Consumer<Throwable>() {
                     public void accept(Throwable t) {
+                        if (Constants.debug)
                         Log.d(Constants.TAG, "Error on Dialog Builder [" + t.toString() + "]");
                     }
                 })
@@ -412,6 +456,7 @@ public class RxDialogBuilder extends AlertDialog.Builder
                             tmpD.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
                             dialogStack.push(tmpD);
+                            if (Constants.debug)
                             Log.d(Constants.TAG, "Push called on dialog stack");
 
                             tmpD.show();

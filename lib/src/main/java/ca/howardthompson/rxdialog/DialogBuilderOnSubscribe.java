@@ -175,7 +175,9 @@ import android.util.Log;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 
-
+/**
+ * Sets up a dialog observable. Handles typical buttons and dismiss.
+ */
 class DialogBuilderOnSubscribe implements ObservableOnSubscribe<DialogEvent>
 {
 
@@ -187,10 +189,14 @@ class DialogBuilderOnSubscribe implements ObservableOnSubscribe<DialogEvent>
         this.builder = builder;
     }
 
-
-    public void subscribe(final ObservableEmitter<DialogEvent> emitter) throws Exception {
+    /**
+     * Called when the Observable is created; kicks off the observable dialog
+     * @param emitter - used to send back events
+     */
+    public void subscribe(final ObservableEmitter<DialogEvent> emitter)  {
 
         if (builder == null) {
+            if (Constants.debug)
             Log.d(Constants.TAG, "DialogBuilderOnSubscribe subscribe builder found to be null.");
             return;
         }

@@ -17,13 +17,14 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.plugins.RxJavaPlugins;
+
 import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_NEUTRAL;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static ca.howardthompson.rxdialog.CustomPanel.NO_FIELD_LIMIT;
 
 
-    public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private CompositeDisposable compDisp = null;
 
@@ -61,6 +62,9 @@ import static ca.howardthompson.rxdialog.CustomPanel.NO_FIELD_LIMIT;
         super.onCreate(savedInstanceState);
         parent = this;
 
+        // Pass compile debug setting to library
+        Constants.setDebug(BuildConfig.DEBUG);
+
         setContentView(R.layout.activity_main);
 
         compDisp = new CompositeDisposable();
@@ -77,6 +81,7 @@ import static ca.howardthompson.rxdialog.CustomPanel.NO_FIELD_LIMIT;
         RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                if (Constants.debug)
                 Log.d(Constants.TAG, "MainActivity PlugIn Event [" + throwable.getMessage() + "]");
             }
         });
@@ -140,6 +145,7 @@ import static ca.howardthompson.rxdialog.CustomPanel.NO_FIELD_LIMIT;
                     Observable<DialogEvent> ObText = cp.addEditText("Input Prompt" + " (alphanumeric)", InputType.TYPE_TEXT_VARIATION_NORMAL, NO_FIELD_LIMIT)
                     .doOnError(new Consumer<Throwable>() {
                         public void accept(Throwable t) {
+                            if (Constants.debug)
                             Log.d(Constants.TAG, "Error on alphanumeric field [" + t.toString() + "]");
                         }
                     })
@@ -153,6 +159,7 @@ import static ca.howardthompson.rxdialog.CustomPanel.NO_FIELD_LIMIT;
                     Observable<DialogEvent> ObNum = cp.addEditText("Input Prompt" + " (numeric)", InputType.TYPE_CLASS_NUMBER, 8)
                     .doOnError(new Consumer<Throwable>() {
                         public void accept(Throwable t) {
+                            if (Constants.debug)
                             Log.d(Constants.TAG, "Error on numeric field [" + t.toString() + "]");
                         }
                     })
@@ -191,6 +198,7 @@ import static ca.howardthompson.rxdialog.CustomPanel.NO_FIELD_LIMIT;
                 .doOnNext(
                         new Consumer<DialogEvent>() {
                             public void accept(DialogEvent event) throws Exception {
+                                if (Constants.debug)
                                 Log.d(Constants.TAG, "Got Event [" + event.toString() + "]");
                                 if (event instanceof DialogTextEvent) {
                                     displayEvent("Text Field Entered [" + ((DialogTextEvent)event).getText() + "]");
@@ -214,6 +222,7 @@ import static ca.howardthompson.rxdialog.CustomPanel.NO_FIELD_LIMIT;
                         })
                 .doOnError(new Consumer<Throwable>() {
                     public void accept(Throwable t) {
+                        if (Constants.debug)
                         Log.d(Constants.TAG, "Error in Dialog [" + t.toString() + "]");
                         displayEvent("Error [" + t.toString() + "]");
 
@@ -225,6 +234,7 @@ import static ca.howardthompson.rxdialog.CustomPanel.NO_FIELD_LIMIT;
                 compDisp.add(dialogEventObservable
                         .subscribe());
         } catch (Exception e) {
+            if (Constants.debug)
             Log.d(Constants.TAG,"Error [" + e.getMessage() + "]");
         }
     }
